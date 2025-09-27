@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.project.jwtlibrary.mapper.UserMapper">
+
+    <!-- ★ 로그인용: 해시는 DB에서 비교하지 않고, 자바에서 matches()로 검증 -->
+    <select id="findByEmail" resultType="org.project.jwtlibrary.dto.userDTO$UserResponseDto">
+        SELECT id, email, password, name, role
+        FROM users
+        WHERE email = #{email}
+            LIMIT 1
+    </select>
+
+</mapper>

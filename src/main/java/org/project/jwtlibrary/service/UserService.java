@@ -4,35 +4,35 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.project.jwtlibrary.dto.userDTO;
 import org.project.jwtlibrary.mapper.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
-public class InMemoryUserService {
+@RequiredArgsConstructor
+public class UserService {
 
     private final UserMapper userMapper;
     private final PasswordEncoder encoder = new BCryptPasswordEncoder();
-    // username = user@local, password = pass1234 테스트 코드
-    private final Map<String, String> users = Map.of(
-            "user@local", "$2a$10$VosxB/3U0aHM79v6yM.c7uPxfIHIxsuKZBcQKt4KDbOycGIvS.Mrq"
-    );
-
+    private static Long id;
+    private static String role;
     public boolean verify(String username, String raw) {
         userDTO.UserResponseDto dto = userMapper.findByEmail(username);
+        if(dto == null){
+            return false;
+        }
+
+        id = Long.valueOf(dto.getId());
+        role = dto.getRole();
         var enc = dto.getPassword();
 //        var enc = users.get(username);
         return enc != null && encoder.matches(raw, enc);
     }
 
-    public Long userIdOf(String username) { return 1L; }
+    public Long userIdOf(String username) { return id; }
 
-    public List<String> rolesOf(String username) { return List.of("USER"); }
+    public List<String> rolesOf(String username) { return List.of(role); }
 }
-

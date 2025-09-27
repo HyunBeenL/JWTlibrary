@@ -6,6 +6,7 @@ import org.project.jwtlibrary.service.InMemoryUserService;
 import org.project.jwtlibrary.service.JwtService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.project.jwtlibrary.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final InMemoryUserService userService;
+//    private final InMemoryUserService userService;
+    private final UserService userService;
     private final JwtService jwt;
 
     @PostMapping("/login")
