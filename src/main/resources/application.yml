@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+auth:
+  jwt:
+    issuer: jwt-demo
+    secret: ${JWT_SECRET:change-me-please-32bytes-minimum-change-me}
+    access-ttl-min: 30
+    refresh-ttl-days: 14
+    cookie-domain: localhost
+    cookie-secure: false     # https면 true
+    cookie-samesite: Lax     # 프론트가 다른 도메인이면 None(+ Secure true)
+
+
+
+
+spring:
+  profiles:
+    active: local   # 로컬 기본 (환경변수 SPRING_PROFILES_ACTIVE로 덮어쓰기 가능)
+  datasource:
+    url: jdbc:mysql://localhost:3306/JWT?useSSL=false&serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+
